@@ -1,4 +1,5 @@
-﻿Clear-Host
+Clear-Host
+
 Write-Host
 Write-Host
 Write-Host "    ███████╗██╗   ██╗███████╗███╗   ██╗████████╗ ██╗      ██████╗  ██████╗ ███████╗" -ForegroundColor Cyan
@@ -73,5 +74,6 @@ function Get-DefenderCompleteHistory {
         Write-Warning "No Defender entries found in Event Log or Protection History."
     }
 }
+
 
 Get-DefenderCompleteHistory
