@@ -1,3 +1,4 @@
+Write-Host
 Clear-Host
 
 Write-Host
@@ -77,3 +78,4 @@ function Get-DefenderCompleteHistory {
 
 
 Get-DefenderCompleteHistory
+
