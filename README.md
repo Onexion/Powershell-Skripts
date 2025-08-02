@@ -1,4 +1,4 @@
-## Powershell Scripts explaination and tutorial:
+## Powershell Scripts explaination and execution:
 
 1. Eventlogs-Tampering.ps1
    
