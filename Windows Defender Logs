@@ -1,0 +1,84 @@
+Clear-Host
+
+Write-Host
+Write-Host "    ██████╗ ███████╗███████╗███████╗███╗   ██╗██████╗ ███████╗██████╗     ██╗      ██████╗  ██████╗ " -ForegroundColor Cyan
+Write-Host "    ██╔══██╗██╔════╝██╔════╝██╔════╝████╗  ██║██╔══██╗██╔════╝██╔══██╗    ██║     ██╔═══██╗██╔════╝ " -ForegroundColor Cyan
+Write-Host "    ██║  ██║█████╗  █████╗  █████╗  ██╔██╗ ██║██║  ██║█████╗  ██████╔╝    ██║     ██║   ██║██║  ███╗" -ForegroundColor Cyan
+Write-Host "    ██║  ██║██╔══╝  ██╔══╝  ██╔══╝  ██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗    ██║     ██║   ██║██║   ██║" -ForegroundColor Cyan
+Write-Host "    ██████╔╝███████╗██║     ███████╗██║ ╚████║██████╔╝███████╗██║  ██║    ███████╗╚██████╔╝╚██████╔╝" -ForegroundColor Cyan
+Write-Host "    ╚═════╝ ╚══════╝╚═╝     ╚══════╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚═════╝  ╚═════╝ " -ForegroundColor Cyan
+Write-Host
+
+function Get-DefenderCompleteHistory{
+
+    Write-Host "`n[Windows Defender – Protection History + Event Logs]" -ForegroundColor Cyan
+
+    $results = @()
+
+    try {
+        $threats = Get-MpThreatDetection -ErrorAction Stop
+        foreach ($t in $threats) {
+            $results += [PSCustomObject]@{
+                Quelle       = "Protection History"
+                Zeitpunkt    = $t.InitialDetectionTime
+                Typ          = "Detection"
+                Bedrohung    = $t.ThreatName
+                Kategorie    = $t.Category
+                Pfad         = ($t.Resources | Select-Object -First 1).Path
+                Prozessname  = ""
+                Aktion       = if ($t.ActionSuccess) { "Success" } else { "Failed" }
+                EventID      = "-"
+            }
+        }
+    } catch {
+        Write-Warning "Protection history not available or no entries found."
+    }
+
+    $logName = "Microsoft-Windows-Windows Defender/Operational"
+    if (Get-WinEvent -ListLog $logName -ErrorAction SilentlyContinue) {
+        $events = Get-WinEvent -LogName $logName -FilterXPath "*[System[(EventID=1116 or EventID=1117)]]" -ErrorAction SilentlyContinue |
+            Sort-Object TimeCreated -Descending
+
+        foreach ($event in $events) {
+            $text = $event.Message
+
+            $bedrohung   = if ($text -match "Name:\s*(.+)")             { $matches[1].Trim() } else { "" }
+            $kategorie   = if ($text -match "Kategorie:\s*(.+)")        { $matches[1].Trim() } else { "" }
+            $pfad        = if ($text -match "Pfad:\s*(.+)")             { $matches[1].Trim() } else { "" }
+            $prozess     = if ($text -match "Prozessname:\s*(.+)")      { $matches[1].Trim() } else { "" }
+            $aktion      = if ($text -match "Aktion:\s*(.+)")           { $matches[1].Trim() } else { "" }
+
+            $results += [PSCustomObject]@{
+                Quelle       = "Event Log (ID $($event.Id))"
+                Zeitpunkt    = $event.TimeCreated
+                Typ          = if ($event.Id -eq 1116) { "Detection" } else { "Action" }
+                Bedrohung    = $bedrohung
+                Kategorie    = $kategorie
+                Pfad         = $pfad
+                Prozessname  = $prozess
+                Aktion       = $aktion
+                EventID      = $event.Id
+            }
+        }
+    } else {
+        Write-Warning "Event log 'Microsoft-Windows-Windows Defender/Operational' not found."
+    }
+
+    if ($results.Count -eq 0) {
+        $results += [PSCustomObject]@{
+            Quelle       = "Info"
+            Zeitpunkt    = Get-Date
+            Typ          = "Notice"
+            Bedrohung    = "No entries found"
+            Kategorie    = "-"
+            Pfad         = "-"
+            Prozessname  = "-"
+            Aktion       = "-"
+            EventID      = "-"
+        }
+    }
+
+    $results | Sort-Object Zeitpunkt -Descending | Out-GridView -Title "Windows Defender Protection History (Complete)"
+}
+
+Get-DefenderCompleteHistory
