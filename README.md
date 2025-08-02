@@ -16,5 +16,6 @@ iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershel
    
    This Tool shows the windows defender history even when deleted.
 ```
+Set-ExecutionPolicy Bypass -Scope CurrentUser -Force
 iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/Windows-Defender-Logs.ps1").Content
 ```
