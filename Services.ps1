@@ -53,7 +53,7 @@ foreach ($name in $servicesToCheck) {
         $start = if ($proc) { $proc.StartTime } else { "-" }
         Write-Host ("{0,-25} {1,-12} {2,-8} {3}" -f $svc.Name, $svc.State, $svc.ProcessId, $start)
     } else {
-        Write-Host ("{0,-25} {1,-12} {2,-8} {3}" -f $name, "Nicht gefunden", "-", "-") -ForegroundColor DarkGray
+        Write-Host ("{0,-25} {1,-12} {2,-8} {3}" -f $name, "Stopped", "-", "-") -ForegroundColor Red
     }
 }
 
@@ -73,4 +73,5 @@ foreach ($procName in $processesToCheck) {
     } else {
         Write-Host ("{0,-25} {1,-12} {2,-8} {3}" -f $procName, "Nicht gefunden", "-", "-") -ForegroundColor DarkGray
     }
+
 }
