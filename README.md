@@ -19,3 +19,9 @@ iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershel
 Set-ExecutionPolicy Bypass -Scope CurrentUser -Force
 iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/Windows-Defender-Logs.ps1").Content
 ```
+4. PowershellCommands.ps1
+
+   This Tool looks for several suspicious commands form Powershell.
+```
+iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/PowershellCommands.ps1").Content
+```
