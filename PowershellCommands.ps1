@@ -1,4 +1,5 @@
-﻿Clear-Host
+Write-Host ""
+Clear-Host
 @"
 
 ███████╗██╗   ██╗███████╗     ██████╗ ██████╗ ███╗   ███╗███╗   ███╗ █████╗ ███╗   ██╗██████╗ ███████╗
@@ -149,3 +150,4 @@ switch ($userInput) {
         Write-Warning "Invalid input: $userInput"
     }
 }
+
