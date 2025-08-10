@@ -21,7 +21,7 @@ iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershel
 ```
 4. PowershellCommands.ps1
 
-   This Tool looks for several suspicious commands form Powershell.
+   This Tool looks for several suspicious commands form Powershell. (Not really finished jet)
 ```
 iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/PowershellCommands.ps1").Content
 ```
