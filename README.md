@@ -20,8 +20,10 @@
 iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/Eventlogs-Tampering.ps1").Content
 ```
 2. Services.ps1
-   
+
    This Tool shows important windows services with start time and if they are running or had been stopped.
+
+    Checks when and if following services are running: PcaSvc, DPS, DiagTrack, SysMain, EventLog, SgrmBroker, explorer, lsass, taskhostw and csrss. 
 ```
 iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/Services.ps1").Content
 ```
