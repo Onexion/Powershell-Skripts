@@ -48,6 +48,14 @@ $patterns = @{
     "Local Script Execution" = @(
         "\\.\\"
     )
+    "Triggerbot" = @(
+        "Triggerbot"
+        "mouse_event"
+        "Left-Click"
+        "MOUSEEVENTF_LEFTDOWN"
+        "System.Drawing.Bitmap"
+        "MOUSEEVENTF_LEFTUP"
+        ""
 }
 
 $allowedExtensions = @('ps1','exe','bat')
@@ -150,3 +158,4 @@ switch ($userInput) {
         Write-Warning "Invalid input: $userInput"
     }
 }
+
