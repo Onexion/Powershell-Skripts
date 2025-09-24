@@ -40,3 +40,9 @@ iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershel
 ```
 iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/PowershellCommands.ps1").Content
 ```
+5. Recording Checker.ps1
+
+      This script checks if a user is Recording or running recording software. It also checks over proxycheck.io if a user is on a Proxy.
+```
+iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/RecordingChecker.ps1").Content
+```
