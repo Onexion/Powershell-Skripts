@@ -34,13 +34,8 @@ iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershel
 Set-ExecutionPolicy Bypass -Scope CurrentUser -Force
 iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/Windows-Defender-Logs.ps1").Content
 ```
-4. PowershellCommands.ps1
 
-   This Tool looks for several suspicious commands form Powershell. (Not really finished jet)
-```
-iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/PowershellCommands.ps1").Content
-```
-5. Recording Checker.ps1
+4. Recording Checker.ps1
 
       This script checks if a user is Recording or running recording software. It also checks over proxycheck.io if a user is on a Proxy.
 ```
