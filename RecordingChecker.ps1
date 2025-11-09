@@ -46,9 +46,24 @@ foreach ($proc in $recordingProcesses) {
 }
 
 $vpnProcesses = @(
-    "pia-client","ProtonVPNService","IpVanish","WindScribe","ExpressVPN","NordVPN",
-    "CyberGhost","pia-tray","SurfShark","VyprVPN","HSSCP","TunnelBear","ProtonVPN"
+    "pia-client","pia-tray","ProtonVPNService","ProtonVPN","IpVanish",
+    "WindScribe","ExpressVPN","NordVPN","CyberGhost","SurfShark","VyprVPN",
+    "HSSCP","TunnelBear","HotspotShield","PrivateVPN","AtlasVPN","Hide.me",
+    "Mullvad","StrongVPN","PerfectPrivacy","IVPN","TorGuard","SaferVPN",
+    "PureVPN","ZenMate","AviraPhantomVPN","BitdefenderVPN","KasperskyVPN",
+    "McAfeeVPN","AVG Secure VPN","Avast SecureLine","F-Secure FREEDOME",
+    "OperaVPN","Browsec","HolaVPN","HMA","HideMyAss","Psiphon","TouchVPN",
+    "Betternet","UrbanVPN","ThunderVPN","MelonVPN","SuperVPN",
+    "openvpn","openvpnserv","wireguard","wg-quick","wg","tailscale","zerotier",
+    "softether","softethersvc","strongswan","charon","ikev2","l2tpclient",
+    "proxycap","proxifier","sockscap","tun2socks","redsocks","stunnel","shadowsocks",
+    "v2ray","xray","naiveproxy","clash","clash-meta","clash-verge","clash-core",
+    "outline","lantern","brook","quantumult","surge","sslocal","ssr-local",
+    "tor","tor.exe","orbot","badvpn-tun2socks","openconnect","anyconnect",
+    "globalprotect","forticlient","pulse","nordlayer","perimeter81","zscaler",
+    "sangfor","netskope","securepoint","f5vpn","barracuda","watchguard"
 )
+
 
 foreach ($vpn in $vpnProcesses) {
     if (Get-Process -Name $vpn -ErrorAction SilentlyContinue) {
@@ -75,3 +90,4 @@ try {
 }
 
 Write-Host "`nDone! Have a nice day!" -ForegroundColor Cyan
+
