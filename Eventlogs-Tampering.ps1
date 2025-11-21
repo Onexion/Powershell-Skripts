@@ -1,3 +1,36 @@
+# Autor: onexions alias: James.dellw on Discord
+# Feel free to use it or change stuff
+# Always let the user the opertunity to look over the code
+
+# WARNING!!!
+
+# Do not use this script if you are not aware of what it does.
+# Always be aware of the dangers on the Internet.
+# If you encounter any form of suspicious behavior, always report it to others.
+# This is a warning!
+
+$identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+$principal = New-Object Security.Principal.WindowsPrincipal($identity)
+
+if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host "`nThis script is not running as admin."
+    Write-Host "Run it again as admin? (Y/N)"
+    $answer = Read-Host
+    if ($answer -match "^[Yy]") {
+        $start = New-Object System.Diagnostics.ProcessStartInfo
+        $start.FileName = "powershell.exe"
+        $start.Arguments = "-ExecutionPolicy Bypass -File `"$PSCommandPath`""
+        $start.Verb = "runas"
+        try {
+            [System.Diagnostics.Process]::Start($start) | Out-Null
+        } catch {}
+        exit
+    } else {
+        Write-Host "Exiting script."
+        exit
+    }
+}
+
 Clear-Host
 Write-Host
 Write-Host
@@ -49,5 +82,6 @@ if ($foundEvents.Count -gt 0) {
 } else {
     Write-Host "`n45 76 65 6E 74 6C 6F 67 73 20 63 6C 65 61 6E`n" -ForegroundColor Green
 }
+
 
 
