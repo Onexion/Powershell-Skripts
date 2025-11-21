@@ -9,17 +9,26 @@ Write-Host "    ███████╗ ╚████╔╝ █████�
 Write-Host "    ╚══════╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝" -ForegroundColor Cyan
 Write-Host
 $searches = @(
-    @{ Log = "Security";    IDs = 1102 },
-    @{ Log = "Application"; IDs = 104 },
-    @{ Log = "Application"; IDs = 3079 },
-    @{ Log = "Security";    IDs = 4663 },
-    @{ Log = "Security";    IDs = 4660 },
-    @{ Log = "Security";    IDs = 4656 },
-    @{ Log = "Microsoft-Windows-Windows Defender/Operational"; IDs = 5001 },
-    @{ Log = "Microsoft-Windows-Windows Defender/Operational"; IDs = 5004 },
-    @{ Log = "Microsoft-Windows-VHDMP/Operational"; IDs = 100 },
-    @{ Log = "Microsoft-Windows-VHDMP/Operational"; IDs = 101 }
+    @{ Log = "Security"; IDs = 1102 }
+    @{ Log = "Application"; IDs = 104 }
+    @{ Log = "System"; IDs = 104 }
+    @{ Log = "Microsoft-Windows-Eventlog"; IDs = 1040 }
+    @{ Log = "Microsoft-Windows-Eventlog"; IDs = 1100 }
+    @{ Log = "Microsoft-Windows-Eventlog"; IDs = 1101 }
+    @{ Log = "Security"; IDs = 4719 }
+    @{ Log = "Security"; IDs = 1108 }
+    @{ Log = "System"; IDs = 7036 }
+    @{ Log = "Security"; IDs = 4720 }
+    @{ Log = "System"; IDs = 8193 }
+    @{ Log = "System"; IDs = 12289 }
+    @{ Log = "Microsoft-Windows-VSS"; IDs = 13 }
+    @{ Log = "Microsoft-Windows-VSS"; IDs = 14 }
+    @{ Log = "Microsoft-Windows-VSS"; IDs = 8224 }
+    @{ Log = "Microsoft-Windows-VSS"; IDs = 8228 }
+    @{ Log = "Security"; IDs = 4616 }
+    @{ Log = "System"; IDs = 1 }
 )
+
 
 $foundEvents = @()
 
@@ -42,3 +51,4 @@ if ($foundEvents.Count -gt 0) {
 } else {
     Write-Host "`n45 76 65 6E 74 6C 6F 67 73 20 63 6C 65 61 6E`n" -ForegroundColor Green
 }
+
