@@ -9,6 +9,9 @@
 # If you encounter any form of suspicious behavior, always report it to others.
 # This is a warning!
 
+# Before banning a user of this script pleas check in Eventlogs yourself
+# The system might have bugged or had an error
+
 $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
 $principal = New-Object Security.Principal.WindowsPrincipal($identity)
 
@@ -82,6 +85,7 @@ if ($foundEvents.Count -gt 0) {
 } else {
     Write-Host "`n45 76 65 6E 74 6C 6F 67 73 20 63 6C 65 61 6E`n" -ForegroundColor Green
 }
+
 
 
 
