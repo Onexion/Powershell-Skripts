@@ -70,7 +70,7 @@ foreach ($search in $searches) {
     try {
         $events = Get-WinEvent -FilterHashtable @{ LogName = $search.Log; Id = $search.IDs } -ErrorAction Stop
         if ($events) {
-            $foundEvents += $events
+            $events | ForEach-Object { $_ | Add-Member -NotePropertyName LogName -NotePropertyValue $search.Log -PassThru } | ForEach-Object { $foundEvents += $_ }
         }
     } catch {
         # Falls Log nicht existiert oder Zugriff verweigert wird -> ignorieren
@@ -80,11 +80,12 @@ foreach ($search in $searches) {
 if ($foundEvents.Count -gt 0) {
     $foundEvents |
         Sort-Object TimeCreated |
-        Select-Object TimeCreated, Id, ProviderName, @{Name="Message";Expression={$_.Message -replace "`r`n","\n"}} |
+        Select-Object TimeCreated, Id, LogName, @{Name="Message";Expression={$_.Message -replace "`r`n","\n"}} |
         Format-Table -AutoSize
 } else {
     Write-Host "`n45 76 65 6E 74 6C 6F 67 73 20 63 6C 65 61 6E`n" -ForegroundColor Green
 }
+
 
 
 
