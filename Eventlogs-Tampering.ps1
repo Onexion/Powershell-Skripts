@@ -25,8 +25,6 @@ $searches = @(
     @{ Log = "Microsoft-Windows-VSS"; IDs = 14 }
     @{ Log = "Microsoft-Windows-VSS"; IDs = 8224 }
     @{ Log = "Microsoft-Windows-VSS"; IDs = 8228 }
-    @{ Log = "Security"; IDs = 4616 }
-    @{ Log = "System"; IDs = 1 }
 )
 
 
@@ -51,4 +49,5 @@ if ($foundEvents.Count -gt 0) {
 } else {
     Write-Host "`n45 76 65 6E 74 6C 6F 67 73 20 63 6C 65 61 6E`n" -ForegroundColor Green
 }
+
 
