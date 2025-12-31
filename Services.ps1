@@ -19,8 +19,7 @@ $bootTime = $os.LastBootUpTime
 $uptime = (Get-Date) - $bootTime
 
 Write-Host ""
-Write-Host ("Systemstart: {0}  |  Uptime: {1:dd\.hh\:mm\:ss}" -f $bootTime, $uptime) -ForegroundColor Green
-Write-Host ("".PadRight(70, "=")) -ForegroundColor DarkGreen
+Write-Host ("Systemstart: {0}  |  Uptime: {1:dd\.hh\:mm\:ss}" -f $bootTime, $uptime)
 
 $servicesToCheck = @(
     "PcaSvc",
@@ -83,4 +82,5 @@ foreach ($procName in $processesToCheck) {
     }
 
 }
+
 
