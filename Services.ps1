@@ -14,9 +14,6 @@ Clear-Host
                                                                                
 "@ | Write-Host -ForegroundColor Cyan
 
-$bootTimeFormatted = $bootTime.ToString("HH:mm:ss")
-Write-Host ("Systemstart: {0,-25} {1,-12} {2,-8} {3}" -f "System", "Running", "-", $bootTimeFormatted)
-
 $servicesToCheck = @(
     "PcaSvc",
     "DPS",
@@ -78,6 +75,7 @@ foreach ($procName in $processesToCheck) {
     }
 
 }
+
 
 
 
