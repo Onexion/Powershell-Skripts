@@ -14,6 +14,14 @@ Clear-Host
                                                                                
 "@ | Write-Host -ForegroundColor Cyan
 
+$os = Get-CimInstance Win32_OperatingSystem
+$bootTime = $os.LastBootUpTime
+$uptime = (Get-Date) - $bootTime
+
+Write-Host ""
+Write-Host ("Systemstart: {0}  |  Uptime: {1:dd\.hh\:mm\:ss}" -f $bootTime, $uptime) -ForegroundColor Green
+Write-Host ("".PadRight(70, "=")) -ForegroundColor DarkGreen
+
 $servicesToCheck = @(
     "PcaSvc",
     "DPS",
@@ -75,3 +83,4 @@ foreach ($procName in $processesToCheck) {
     }
 
 }
+
