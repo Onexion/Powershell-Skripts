@@ -14,12 +14,8 @@ Clear-Host
                                                                                
 "@ | Write-Host -ForegroundColor Cyan
 
-$os = Get-CimInstance Win32_OperatingSystem
-$bootTime = $os.LastBootUpTime
-$uptime = (Get-Date) - $bootTime
-
-Write-Host ""
-Write-Host ("Systemstart: {0}  |  Uptime: {1:dd\.hh\:mm\:ss}" -f $bootTime, $uptime)
+$bootTimeFormatted = $bootTime.ToString("HH:mm:ss")
+Write-Host ("Systemstart: {0,-25} {1,-12} {2,-8} {3}" -f "System", "Running", "-", $bootTimeFormatted)
 
 $servicesToCheck = @(
     "PcaSvc",
@@ -82,5 +78,6 @@ foreach ($procName in $processesToCheck) {
     }
 
 }
+
 
 
