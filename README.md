@@ -52,7 +52,7 @@ iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershel
 
 4. Recording Checker.ps1
 
-      This script checks if a user is Recording or running recording software. It also checks over proxycheck.io if a user is on a Proxy.
+      This script checks if a user is Recording or running a VPN.
 ```
 iex (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Onexion/Powershell-Skripts/main/RecordingChecker.ps1").Content
 ```
