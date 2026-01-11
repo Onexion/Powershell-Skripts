@@ -1,24 +1,29 @@
-Write-Host
+Write-Host ""
 Clear-Host
 
-Write-Host
-Write-Host
-Write-Host "    ███████╗██╗   ██╗███████╗███╗   ██╗████████╗ ██╗      ██████╗  ██████╗ ███████╗" -ForegroundColor Cyan
-Write-Host "    ██╔════╝██║   ██║██╔════╝████╗  ██║╚══██╔══╝ ██║     ██╔═══██╗██╔════╝ ██╔════╝" -ForegroundColor Cyan
-Write-Host "    █████╗  ██║   ██║█████╗  ██╔██╗ ██║   ██║    ██║     ██║   ██║██║  ███╗███████╗" -ForegroundColor Cyan
-Write-Host "    ██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║╚██╗██║   ██║    ██║     ██║   ██║██║   ██║╚════██║" -ForegroundColor Cyan
-Write-Host "    ███████╗ ╚████╔╝ ███████╗██║ ╚████║   ██║    ███████╗╚██████╔╝╚██████╔╝███████║" -ForegroundColor Cyan
-Write-Host "    ╚══════╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝    ╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝" -ForegroundColor Cyan
-Write-Host
-Write-Host
-Write-Host "Windows Protection History" -ForegroundColor Cyan
-Write-Host 
+function Show-Spinner {
+    param(
+        [int]$DurationMs = 2000,
+        [int]$Percent = 0 
+    )
 
+    $spinner = @('|','/','-','\')
+    $startTime = Get-Date
+    $i = 0
+
+    while ((Get-Date) -lt $startTime.AddMilliseconds($DurationMs)) {
+        $char = $spinner[$i % $spinner.Length]
+        Write-Host -NoNewline "`r$char Loading... $Percent%"
+        Start-Sleep -Milliseconds 150
+        $i++
+    }
+}
 
 function Get-DefenderCompleteHistory {
 
     $results = @()
 
+    Show-Spinner -DurationMs 1500 -Percent 10
     try {
         $threats = Get-MpThreatDetection -ErrorAction Stop
         foreach ($t in $threats) {
@@ -38,6 +43,7 @@ function Get-DefenderCompleteHistory {
         Write-Warning "Get-MpThreatDetection is not available or no threats found."
     }
 
+    Show-Spinner -DurationMs 2000 -Percent 40
     $logName = "Microsoft-Windows-Windows Defender/Operational"
     if (Get-WinEvent -ListLog $logName -ErrorAction SilentlyContinue) {
         $events = Get-WinEvent -LogName $logName -FilterXPath "*[System[(EventID=1116 or EventID=1117)]]" -ErrorAction SilentlyContinue |
@@ -45,7 +51,6 @@ function Get-DefenderCompleteHistory {
 
         foreach ($event in $events) {
             $text = $event.Message
-
             $threat   = if ($text -match "Name:\s*(.+)") { $matches[1].Trim() } else { "" }
             $category = if ($text -match "Kategorie:\s*(.+)") { $matches[1].Trim() } else { "" }
             $path     = if ($text -match "Pfad:\s*(.+)") { $matches[1].Trim() } else { "" }
@@ -65,17 +70,44 @@ function Get-DefenderCompleteHistory {
                 EventID      = $event.Id
             }
         }
+
+        Show-Spinner -DurationMs 1500 -Percent 70
+        $events5007 = Get-WinEvent -LogName $logName -FilterXPath "*[System[(EventID=5007)]]" -ErrorAction SilentlyContinue |
+            Sort-Object TimeCreated -Descending
+
+        foreach ($event in $events5007) {
+            $xml = [xml]$event.ToXml()
+            $oldValue = ($xml.Event.EventData.Data | Where-Object { $_.Name -eq "Old Value" }).'#text'
+
+            if ($oldValue -match "Exclusions\\Paths\\(.+?)\s*=") {
+                $path = $matches[1]
+
+                $results += [PSCustomObject]@{
+                    Source       = "ExclusionChange"
+                    Time         = $event.TimeCreated
+                    Type         = "ExclusionRemoved"
+                    Threat       = ""
+                    Category     = ""
+                    Path         = $path
+                    Process      = ""
+                    Action       = "Removed"
+                    EventID      = $event.Id
+                }
+            }
+        }
     } else {
         Write-Warning "Event log not found: $logName"
     }
 
+    Show-Spinner -DurationMs 1000 -Percent 100
+
     if ($results.Count -gt 0) {
+        Clear-Host
+        Write-Host "`rDone!`n"
         $results | Sort-Object Time -Descending | Out-GridView -Title "Windows Defender: Full Detection History"
     } else {
         Write-Warning "No Defender entries found in Event Log or Protection History."
     }
 }
 
-
 Get-DefenderCompleteHistory
-
