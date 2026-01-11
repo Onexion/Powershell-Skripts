@@ -1,6 +1,6 @@
 # Autor: Onexion (github.com/Onexion)
 # You are free to use it or Fork it from https://github.com/Onexion/Powershell-Skripts
-# If any problems accure pleas write a discord message to "Onexions"
+# If any problems accure please write a discord message to "Onexions"
 # If you anything to add please write me a DM.
 # This tool is not ment to harm anyone and i dont asosiate with any abuse with this script.
 
@@ -187,4 +187,5 @@ do {
 while ($true)
 
 Clear-Host
+
 
