@@ -1,5 +1,10 @@
 Clear-Host
 
+If (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Start-Process powershell "-File `"$PSCommandPath`"" -Verb RunAs
+    exit
+}
+
 # ASCII-Banner
 @"
 
@@ -75,6 +80,7 @@ foreach ($procName in $processesToCheck) {
     }
 
 }
+
 
 
 
