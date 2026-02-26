@@ -48,6 +48,7 @@ Write-Host
 $searches = @(
     @{ Log = "Security"; IDs = 1102 }
     @{ Log = "Application"; IDs = 104 }
+    @{ Log = "Application"; IDs = 3079 }
     @{ Log = "System"; IDs = 104 }
     @{ Log = "Microsoft-Windows-Eventlog"; IDs = 1040 }
     @{ Log = "Microsoft-Windows-Eventlog"; IDs = 1100 }
@@ -85,3 +86,4 @@ if ($foundEvents.Count -gt 0) {
 } else {
     Write-Host "`n45 76 65 6E 74 6C 6F 67 73 20 63 6C 65 61 6E`n" -ForegroundColor Green
 }
+
