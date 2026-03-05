@@ -28,15 +28,6 @@ $servicesToCheck = @(
     "SgrmBroker"
 )
 
-$servicesToCheck = @(
-    "PcaSvc",
-    "DPS",
-    "DiagTrack",
-    "SysMain",
-    "EventLog",
-    "SgrmBroker"
-)
-
 $cdpDynamic = Get-Service | Where-Object { $_.Name -like "CDPUserSvc*" } | Select-Object -ExpandProperty Name
 $servicesToCheck += $cdpDynamic
 
@@ -80,6 +71,7 @@ foreach ($procName in $processesToCheck) {
     }
 
 }
+
 
 
 
